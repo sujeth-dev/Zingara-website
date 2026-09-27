@@ -7,6 +7,7 @@
 
 /* ---------- GOOGLE FONTS ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 
 /* ---------- CSS CUSTOM PROPERTIES ---------- */
 :root {
@@ -1994,37 +1995,37 @@ p:last-child {
   }
 }
 
-/* ---------- BREAKFAST MENU LIGHTBOX ---------- */
-.lightbox {
+/* ---------- AMMA'S BREAKFAST MENU POPUP ---------- */
+.amma-modal {
+  --amma-paper: #fbf8f2;
+  --amma-ink: #2a211c;
+  --amma-brown: #5a2a1e;
+  --amma-accent: #D4532B;
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(10, 9, 8, 0.92);
+  background: rgba(10, 9, 8, 0.88);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--sp-8);
+  padding: var(--sp-4);
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--transition);
+  transition: opacity var(--transition), visibility var(--transition);
 }
 
-.lightbox.open {
+.amma-modal.open {
   opacity: 1;
   visibility: visible;
 }
 
-.lightbox__img {
-  max-width: min(90vw, 480px);
-  max-height: 90vh;
-  border-radius: var(--radius-md);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-}
-
-.lightbox__close {
+.amma-modal__close {
   position: absolute;
-  top: var(--sp-6);
-  right: var(--sp-6);
+  top: var(--sp-4);
+  right: var(--sp-4);
+  z-index: 2;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -2038,6 +2039,265 @@ p:last-child {
   transition: border-color var(--transition);
 }
 
-.lightbox__close:hover {
+.amma-modal__close:hover {
   border-color: var(--color-gold);
+}
+
+.amma-menu {
+  position: relative;
+  width: min(100%, 480px);
+  height: min(100%, 920px);
+  background: var(--amma-paper);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  color: var(--amma-ink);
+  transform: translateY(12px) scale(0.98);
+  transition: transform var(--transition-slow);
+}
+
+.amma-modal.open .amma-menu {
+  transform: none;
+}
+
+/* ornamental border */
+.amma-menu {
+  --frame: 34px;
+}
+
+.amma-menu__frame {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.amma-menu__frame--top,
+.amma-menu__frame--bottom {
+  left: var(--frame);
+  right: var(--frame);
+  height: calc(var(--frame) * 20 / 34);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='20' viewBox='0 0 48 20'%3E%3Cg fill='none' stroke='%23D4532B' stroke-width='1.3'%3E%3Cpath d='M0 10H48'/%3E%3Cpath d='M2 10L12 4.2L22 10L12 15.8Z' fill='%23fbf8f2' stroke-width='1.4'/%3E%3Cpath d='M4 10H20' stroke-width='1'/%3E%3C/g%3E%3Cg fill='%23D4532B'%3E%3Ccircle cx='30.2' cy='10' r='2.8'/%3E%3Ccircle cx='34.6' cy='10' r='1.7'/%3E%3Ccircle cx='37.6' cy='10' r='1.7'/%3E%3Ccircle cx='42' cy='10' r='2.8'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: round no-repeat;
+  background-size: auto 100%;
+}
+
+.amma-menu__frame--top { top: 0; }
+.amma-menu__frame--bottom { bottom: 0; }
+
+.amma-menu__frame--left,
+.amma-menu__frame--right {
+  top: 0;
+  bottom: 0;
+  width: var(--frame);
+  background-repeat: no-repeat round;
+  background-size: 100% auto;
+}
+
+.amma-menu__frame--left { left: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='34' viewBox='0 0 22 34'%3E%3Cpath d='M9 1 C14 4 16 9 13 13.2 C11.2 15.6 9.4 16.8 9 18.4 C8.6 16.8 6.8 15.6 5 13.2 C2 9 4 4 9 1 Z' fill='%23D4532B'/%3E%0A%3Cpath d='M9 18.4 C15.5 20.8 18 26.3 13.8 30.2 C10.2 33.5 4.3 32.3 3.1 27.8 C2.1 24 5 21.1 8.4 22.5 C10.5 23.4 10.4 26.1 8.1 26.7' fill='none' stroke='%23D4532B' stroke-width='1.5' stroke-linecap='round'/%3E%0A%3Ccircle cx='8.1' cy='26.7' r='1' fill='%23D4532B'/%3E%3C/svg%3E"); }
+.amma-menu__frame--right { right: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='34' viewBox='0 0 22 34'%3E%3Cg transform='translate%2822 0%29 scale%28-1 1%29'%3E%3Cpath d='M9 1 C14 4 16 9 13 13.2 C11.2 15.6 9.4 16.8 9 18.4 C8.6 16.8 6.8 15.6 5 13.2 C2 9 4 4 9 1 Z' fill='%23D4532B'/%3E%0A%3Cpath d='M9 18.4 C15.5 20.8 18 26.3 13.8 30.2 C10.2 33.5 4.3 32.3 3.1 27.8 C2.1 24 5 21.1 8.4 22.5 C10.5 23.4 10.4 26.1 8.1 26.7' fill='none' stroke='%23D4532B' stroke-width='1.5' stroke-linecap='round'/%3E%0A%3Ccircle cx='8.1' cy='26.7' r='1' fill='%23D4532B'/%3E%3C/g%3E%3C/svg%3E"); }
+
+.amma-menu__scroll {
+  position: absolute;
+  inset: calc(var(--frame) * 20 / 34) var(--frame);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 83, 43, 0.45) transparent;
+}
+
+/* header */
+.amma-menu__header {
+  text-align: center;
+  margin-bottom: var(--sp-2);
+}
+
+.amma-menu__logo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--amma-brown);
+}
+
+.amma-menu__logo-script {
+  position: relative;
+  font-family: 'Kaushan Script', 'Brush Script MT', cursive;
+  font-size: 3.4rem;
+  line-height: 0.95;
+  padding-right: 0.6rem;
+}
+
+.amma-menu__heart {
+  position: absolute;
+  top: -0.15rem;
+  right: -0.9rem;
+  color: var(--amma-brown);
+}
+
+.amma-menu__logo-word {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.2rem;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--amma-brown);
+}
+
+.amma-menu__logo-word i {
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  letter-spacing: 0;
+}
+
+.amma-menu__tagline {
+  margin: var(--sp-2) 0 var(--sp-3);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: #b0623a;
+}
+
+.amma-menu__title {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--amma-ink);
+}
+
+.amma-menu__timing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: var(--sp-2) 0 0;
+  padding: 0.3rem 0.9rem;
+  border-radius: var(--radius-pill);
+  background: rgba(212, 83, 43, 0.08);
+  border: 1px solid rgba(212, 83, 43, 0.35);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--amma-brown);
+}
+
+.amma-menu__timing svg {
+  flex-shrink: 0;
+  color: var(--amma-accent);
+}
+
+/* sections */
+.amma-menu__section {
+  padding: var(--sp-4) 0 var(--sp-3);
+  border-bottom: 1px solid rgba(42, 33, 28, 0.28);
+}
+
+.amma-menu__section:last-of-type {
+  border-bottom: none;
+}
+
+.amma-menu__heading {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--amma-brown);
+  margin: 0 0 var(--sp-1);
+}
+
+.amma-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.amma-menu__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 1px 0;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.amma-menu__name small {
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+.amma-menu__dots {
+  flex: 1 1 1rem;
+  min-width: 1rem;
+  border-bottom: 2px dotted rgba(42, 33, 28, 0.55);
+  transform: translateY(-3px);
+}
+
+.amma-menu__price {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.amma-menu__note {
+  margin: var(--sp-4) 0 0;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: rgba(42, 33, 28, 0.85);
+}
+
+@media (max-width: 480px) {
+  .amma-modal {
+    padding: var(--sp-3);
+  }
+
+  .amma-modal__close {
+    top: var(--sp-2);
+    right: var(--sp-3);
+    width: 36px;
+    height: 36px;
+  }
+
+  .amma-menu {
+    height: calc(100% - 40px);
+    margin-top: 40px;
+  }
+
+  .amma-menu {
+    --frame: 26px;
+  }
+
+  .amma-menu__scroll {
+    padding: var(--sp-3) var(--sp-2) var(--sp-3);
+  }
+
+  .amma-menu__logo-script {
+    font-size: 2.9rem;
+  }
+
+  .amma-menu__title {
+    font-size: 1.3rem;
+  }
+
+  .amma-menu__heading {
+    font-size: 1.2rem;
+  }
+
+  .amma-menu__list li {
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amma-menu {
+    transition: none;
+  }
 }

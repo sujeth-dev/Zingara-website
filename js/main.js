@@ -153,8 +153,15 @@
 
     const openLightbox = () => {
       breakfastLightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      breakfastLightboxClose?.focus();
     };
-    const closeLightbox = () => breakfastLightbox.classList.remove('open');
+    const closeLightbox = () => {
+      if (!breakfastLightbox.classList.contains('open')) return;
+      breakfastLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      breakfastTrigger.focus();
+    };
 
     breakfastTrigger.addEventListener('click', openLightbox);
     breakfastLightboxClose?.addEventListener('click', closeLightbox);
@@ -164,6 +171,9 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeLightbox();
     });
+
+    // Deep link: index.html#breakfast-menu opens the menu directly
+    if (window.location.hash === '#breakfast-menu') openLightbox();
   }
 
   /* ---------- SET ACTIVE NAV LINK ---------- */
